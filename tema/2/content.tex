@@ -1,0 +1,47 @@
+\chapter{Topología euclídea de $\R^n$}
+De nuevo, asumimos que $V$ es un espacio vectorial sobre $\R$.
+\begin{definition}[Punto interior]
+  Llmamos a $x\in A\subseteq V$ un punto interior si existe $\epsilon >0$ tal que $B_\epsilon (x)\subseteq A$.
+\end{definition}
+\begin{definition}[Interior de un conjunto]
+  Dado $A\subseteq V$, su interior es \[
+      \Int A = \{x\in A : x \text{ es un punto interior de } A\} 
+  \] 
+\end{definition}
+\begin{definition}[Conjunto abierto]
+  Llamamos a $A\subseteq V$ abierto si $\Int A=A$.
+\end{definition}
+\begin{lemma}
+  Toda bola es un conjunto abierto.
+\end{lemma}
+\begin{proof}
+  Sea $x \in B_\epsilon (a)$ y $\epsilon '= \epsilon -\norm{x-a}>0$; considera la bola $B_{\epsilon'}(x)$, si $y\in B_{\epsilon'}(x)$, entonces $\norm{y-x}<\epsilon - \norm{x-a}$ y suando la desigualdad triangular \[
+      \norm{y-a}\leq \norm{y-x}+\norm{x-a}< \epsilon ,
+    \] lo cual implica $y\in B_\epsilon (a)$ y que para todo $x\in B_\epsilon (a)$, $B_{\epsilon'} (x) \subseteq B_\epsilon (a)$. Esto es, por definición, $\Int B_\epsilon (a)= B_\epsilon (a)$.
+\end{proof}
+\begin{proposition}[Propiedades de conjuntos abiertos]
+  \begin{enumerate}
+    \item La unión (finita o infinita) de una familia de conjuntos abiertos es un conjunto abierto.
+    \item La intersección de una familia \emph{finita} de conjuntos abierto es un conjunto abierto.
+    \item Si $A \subseteq B$, entonces $\Int A \subseteq \Int B$.
+  \end{enumerate}
+\end{proposition}
+\begin{lemma}[El interior es el subconjunto abierto más grande]
+  \label{lemma:conjunto_abierto_mas_grande_es_Int}
+ Sea $A\subseteq V$, el conjunto abierto más grande contenido en $A$ es $\Int A$; esto es, si $C\subseteq A$ y $C$ es abierto, entonces $C \subseteq \Int A$.
+ \end{lemma}
+\begin{proof}
+  Sea $x\in \Int C$, entonces para algún $\epsilon >0$, $B_\epsilon (x)\subset C$; como $C\subseteq A$, $x\in \Int A$; finalmente como $C$ es abierto $C=\Int C\subset \Int A$ como se quería demostrar.
+\end{proof}
+\begin{lemma}
+    Sean $A,B\subseteq V$, entonces $\Int(A \cap B)= \Int A \cap \Int B$ 
+ \end{lemma}
+ \begin{proof}
+   Como $\Int A, \Int B$ son conjuntos abiertos, su intersección $\Int A \cap \Int B$ lo es; como $\Int A \subseteq A$ y $\Int B \subseteq B$, entonces $\Int A \cap \Int B \subseteq A \cap B$. Luego, por \fullref{lemma:conjunto_abierto_mas_grande_es_Int}, sabemos que $\Int A \cap \Int B \subseteq \Int(A\cap B)$. La otra dirección de la inclusión es trivial.
+ \end{proof}
+ \begin{definition}
+   Si $A\subseteq V$, denotamos su complementario rrespecto a $V$ por$A^c=V\setminus A$.
+ \end{definition}
+ \begin{definition}[Conjunto cerrado]
+   Llamamos a $A\subseteq V$ cerrado si $A^c$ es abierto.
+ \end{definition}

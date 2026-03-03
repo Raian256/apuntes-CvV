@@ -1,0 +1,56 @@
+% fig/lp_balls.tex
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+
+% local helpers (figure-specific)
+\newcommand{\LpBoundary}[1]{%
+  \addplot[domain=0:360,samples=361,very thick]
+  ({cos(x)/pow(pow(abs(cos(x)),#1)+pow(abs(sin(x)),#1),1/#1)},
+   {sin(x)/pow(pow(abs(cos(x)),#1)+pow(abs(sin(x)),#1),1/#1)});
+}
+\newcommand{\LpFill}[1]{%
+  \addplot[domain=0:360,samples=361,draw=none,fill opacity=0.12]
+  ({cos(x)/pow(pow(abs(cos(x)),#1)+pow(abs(sin(x)),#1),1/#1)},
+   {sin(x)/pow(pow(abs(cos(x)),#1)+pow(abs(sin(x)),#1),1/#1)})
+  \closedcycle;
+}
+\newcommand{\SamplePoints}{%
+  \addplot[only marks, mark=*, mark size=1.6pt] coordinates {(0.3,0.4)} node[above right] {$m_1$};
+  \addplot[only marks, mark=*, mark size=1.6pt] coordinates {(1,0)} node[below right] {$m_2$};
+  \addplot[only marks, mark=*, mark size=1.6pt] coordinates {(0,1)} node[above left] {$m_3$};
+}
+
+\begin{groupplot}[
+  group style={group size=3 by 2, horizontal sep=1.2cm, vertical sep=1.2cm},
+  width=5.2cm, height=5.2cm,
+]
+
+\nextgroupplot[title={$p=1$}, myBallAxis]
+  \LpFill{1}\LpBoundary{1}\SamplePoints
+
+\nextgroupplot[title={$p=2$}, myBallAxis]
+  \LpFill{2}\LpBoundary{2}\SamplePoints
+
+\nextgroupplot[title={$p=3$}, myBallAxis]
+  \LpFill{3}\LpBoundary{3}\SamplePoints
+
+\nextgroupplot[title={$p=4$}, myBallAxis]
+  \LpFill{4}\LpBoundary{4}\SamplePoints
+
+\nextgroupplot[title={$p=\infty$}, myBallAxis]
+  \addplot[draw=none, fill opacity=0.12] coordinates {(-1,-1) (1,-1) (1,1) (-1,1)} \closedcycle;
+  \addplot[very thick] coordinates {(-1,-1) (1,-1) (1,1) (-1,1) (-1,-1)};
+  \SamplePoints
+
+\nextgroupplot[title={}]
+  \node[align=left] at (axis cs:0,0.4)
+  {\(\displaystyle B_p(0,1)=\{(x,y):|x|^p+|y|^p<1\}\)\\[2mm]
+   \(\displaystyle \overline B_p(0,1)=\{(x,y):|x|^p+|y|^p\le 1\}\)\\[2mm]
+   \(\displaystyle B_\infty(0,1)=\{(x,y):\max(|x|,|y|)<1\}\).};
+
+\end{groupplot}
+\end{tikzpicture}
+\caption{Bolas abiertas de radio \(1\) para \(\|\cdot\|_p\) en \(\mathbb R^2\), con puntos \(m_i\in \overline B_p(0,1)\).}
+\label{fig:tema_1_bolas_lp}
+\end{figure}

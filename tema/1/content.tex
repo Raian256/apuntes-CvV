@@ -1,0 +1,203 @@
+\chapter{Espacios vectoriales normados}
+Durante este capítulo se asume que $V$ es un espacio vectorial sobre $\R$ .
+\section{Normas}
+Se abstrae la noción de distancia a través la norma.
+\begin{definition}\label{def:norma}
+  Llamamos norma en $V$ a una función $\norm{\cdot} : V\to \R$ si cumple que para todo $v,w\in V$ y $\lambda \in R$
+  \begin{enumerate}
+    \item $\norm{x}\ge 0$ y $\norm{x}=0$ si y solo si $x=0$. 
+    \item $| \lambda|\norm{v}=\norm{\lambda v}$  (\textit{homogeneidad}).
+    \item $\norm{v+w}\le \norm{v}+\norm{w}$ (\textit{desigualdad triangular}).
+  \end{enumerate}
+\end{definition}
+\begin{lemma}[Desigualdad triangular inversa]
+  Sean $v,w\in V$, entonces $|\norm{v}-\norm{w}|\le \norm{v-w}$
+\end{lemma}
+\begin{proof}
+  Véase que $\norm{v}=\norm{(v-w)+w}$, aplicamos la desigualdad triangular $\norm{v}\le \norm{v-w}+\norm{w}$ y $\norm{v}-\norm{w}\le \norm{v-w}$; de forma análoga $\norm{w}-\norm{v}\le \norm{v-w}$.
+\end{proof}
+Las siguientes normas son las más utilizadas en $\R^n$.
+\begin{definition}[Normas $L_p$]
+  Sea $p\ge 1$ y $V=R^n$, llamamos norma $L_p$ a  
+  \[
+    \norm{x}_p=\sqrt[p]{\abs{x_1}^p+\ldots+\abs{x_n}^p}
+  \] donde $x=(x_1,\ldots,x_n)$.\\
+  Además definimos la p-infinita por $\norm{x}_\infty=\max_{1\le i \le n} \{\abs{x_i}\}$ 
+\end{definition}
+Si son normas han de cumplir la desigualdad triangular; para demostrar esto usaremos una serie de lemas, cada uno demostrado por el anterior.
+\begin{definition}[Función convexa]
+  Llamamos a la función $f:[a,b]\subset \R\to \R$ convexa si $f''(x)\ge 0$.
+\end{definition}
+Entonces para $x<\alpha<y$ tenemos que \[
+    \frac{f(\alpha))-f(x))}{\alpha-x}\le \frac{f(z))-f(\alpha))}{z-\alpha}.
+  \] Ademas sabemos que para $t\in[0,1]$, $x<tx+(1-t)y<z$, entonces sustituyendo $\alpha=tx+(1-t)y$ y haciendo las cuentas (creeme) llegamos a que \[
+      f(tx+(1-t)y)\le tf(x)+(1-t)f(y)
+  \] 
+\begin{lemma}\label{lemma:convexa-contractiva}
+  Sean $\alpha ',\beta '\geq 0$ tal que $\alpha'+\beta'=1$ , si $f:D\subseteq \R \to \R$ es una función convexa, entonces para todo $x,y\in D$ \[
+      \alpha' f(x)+\beta' f(y)\ge f(\alpha' x+\beta' y)
+  \]
+\end{lemma}
+\begin{lemma}[Desigualdad de Young]\label{lemma:young}
+  Sean $a,b\ge 0$ y $\alpha,\beta>1$ tal que $\frac{1}{\alpha}+\frac{1}{\beta}=1$, entonces 
+  \[
+      ab\le \frac{a^\alpha}{\alpha}+\frac{b^\beta}{\beta}
+  \]  
+\end{lemma}
+Atentos a la magia negra.
+\begin{proof}
+  Véase que $f(x)=\exp(x)$ es convexa en su dominio. Usando el lema \ref{lemma:convexa-contractiva} tenemos que \[
+      \frac{1}{\alpha}\exp(x)+\frac{1}{\beta}\exp(y)\ge \exp(\frac{1}{\alpha}x+\frac{1}{\beta}y)
+  \] 
+  eligiendo $x=\log(a^\alpha)$ e $y=\log(b^\beta)$ y simplificando, entonces 
+  \[
+      \frac{a^\alpha}{\alpha}+\frac{b^\beta}{\beta}\ge ab
+  \]  
+\end{proof}
+\begin{lemma}[Desigualdad de Hölder]
+  Sean $x,y\in \R^n$, tal que $x_{i},y_{i}\ge 0$ para $i\in \{1,\ldots,n\}$; $\alpha,\beta>1 $ tal que $\frac{1}{\alpha}+\frac{1}{\beta}=1$, entonces 
+  \[
+    \sum_{i=1}^{n} x_{i}y_{i}\le \norm{x}_\alpha\cdot\norm{y}_\beta
+  \] 
+\end{lemma}
+\begin{proof}
+  Si $\norm{x}_\alpha=0$ o $\norm{y}_\beta=0$, entonces es trivial; asume que no lo son. Basta demostrar que $\frac{\sum_{i=1}^{n} x_{i} y_{i}}{\norm{x}_\alpha \cdot\norm{y}_\beta}\le 1$. Para esto, consideramos el $i$-ésimo termino de la expresión anterior y aplicamos la desigualdad de Young \ref{lemma:young} \[
+    \parens*{ \frac{x_{i}}{\norm{x}_\alpha}}\cdot 
+    \parens*{\frac{y_{i}}{\norm{y}_\beta}}\le 
+\frac{1}{\alpha}\parens*{ \frac{x_{i}^\alpha}{\norm{x}_\alpha^\alpha}}+
+    \frac{1}{\beta}\parens*{\frac{y_{i}^\beta}{\norm{y}_\beta^\beta}} 
+  ;\]
+  sumamos ahora los $n$ términos y agrupamos \[
+     \sum_{i=1}^{n} \frac{x_{i}y_{i}}{\norm{x}_\alpha\norm{y}_\beta}\le 
+\frac{1}{\alpha}\parens*{ \frac{\sum_{i=1}^{n} x_{i}^\alpha}{\norm{x}_\alpha^\alpha}}+
+    \frac{1}{\beta}\parens*{\frac{\sum_{i=1}^{n} y_{i}^\beta}{\norm{y}_\beta^\beta}}=\frac{1}{\alpha}+\frac{1}{\beta}=1
+  \] 
+\end{proof}
+\begin{lemma}[Desigualdad de Minkowski]
+  Sean $x,y\in\R^n$ y $p\ge 1$, entonces \[
+      \norm{x+y}_p\le \norm{x}_p+\norm{y}_p
+  \] 
+\end{lemma}
+\begin{proof}
+    TODO
+\end{proof}
+\begin{theorem}[Las normas $L_p$ son normas]
+\end{theorem}
+\begin{definition}[Normas equivalentes]
+  Llamamos a dos normas $\norm{\cdot}, \norm{\cdot}'$ equivlaentes si existen $C_1,C_2>0$ tal que para todo $x\in V$ \[
+      C_1 \norm{x}\le \norm{x}' \le C_2\norm{x}
+  \] 
+\end{definition}
+\begin{theorem}[Equivalencia de normas en $\R^n$ ]\label{thm:equivalencia_de_normas_en_Rn}
+  En $\R^n$ todas las normas son equivalentes
+\end{theorem}
+\begin{proof}
+    TODO
+\end{proof}
+\section{Producto interno}
+\begin{definition}[Producto interno]
+  Llmamamos producto interno en $V$ a una función $\ip{x,y}: V\times V\to \R$ que cumple \begin{enumerate}
+    \item $\ip{x,x}\ge 0$ dandose la igualdad si y solo si $x=0$,
+    \item para todo $y\in V$ la función $x\mapsto \ip{x,y}$ es lineal,
+    \item $\ip{x,y} = \ip{y,x}$.
+  \end{enumerate}
+\end{definition}
+\begin{proposition}[Norma inducida por un producto interno]
+  Dado un producto interno, la función $\norm{x}=\sqrt{\ip{x,x}} $ es una norma.
+\end{proposition}
+Para demostrar que cumple la desigualdad triangular usaremos el siguiente teorema.
+\begin{theorem}[Cauchy-Schwarz]
+  Sea $x,y\in V$, si la norma es la inducida por el producto interno, entonces \[
+    \abs{\ip{x,y}}\le \norm{x}\norm{y}
+  \] 
+\end{theorem}
+\begin{proof}
+  A mí me gusta la demostración usando la descomposición en vectores ortogonales. La profesora ha dado otra.
+\end{proof}
+Verifica por ti mismo que ahora se puede demostrar que es una norma.
+\begin{proposition}[Ley del paralelogramo]
+  Una norma está inducida por un producto interno si y solo si cumple que para todo $x,y\in V$ \[
+    \norm{x+y}^2+\norm{x-y}^2=2\norm{x}^2+2\norm{y}^2.
+  \] 
+\end{proposition}
+\begin{proof}
+  Asume que la norma $\norm{\cdot}$ está inducida por un producto escalar, observa que $\norm{x\pm y}^2=\ip{x\pm y,x\pm y}=\norm{x}^2+\norm{y}^2\pm 2\ip{x,y}$ y entonces se verifica la ley del paralelogramo.\\
+  Se deja como tortura para el lector verificar que el enunciado converso es cierto.
+\end{proof}
+En $\R^2$ se ilustra de la siguiente forma y se puede demostrar usando geometría elemental que la ley se da en todo paralelogramo. 
+\input{fig/ley_paralelogramo.tex}
+\section{Bolas, segmentos y conjuntos convexos}
+Habiendo generalizado la noción de distancia, generalizamos la de intervalo.
+\begin{definition}[Bola abierta]
+  Definimos la bola abierta con centro $a\in V$ y radio $\epsilon>0$ \[
+      B_\epsilon (a)=\{v\in V : \norm{v-a}<\epsilon\} 
+  \]
+\end{definition}
+\begin{example}
+  Sea $V=\R^2$, ilustramos las bolas abiertas con centro 0 y radio 1 para las normas $L_p$, $p=1,2,3,4,\infty$ en la figura \ref{fig:tema_1_bolas_lp}
+  \input{./fig/tema_1_bolas_lp.tex}
+\end{example}
+Generalizamos ahora la noción de segmento entre dos puntos.
+\begin{definition}[Segmento]
+  Dados dos puntos $x,y\in V$ llamamos segmento a \[
+    [x,y]=\{z\in V : z=tx+(1-t)y, \;  t\in[0,1]\} 
+  \] 
+\end{definition}
+\begin{definition}[Conjunto convexo]
+  Decimos que un conjunto $C\subseteq V$ es convexo si para todo $x,y\in C$ el segmento que los une está contenido $[x,y]\subseteq  C$ 
+\end{definition}
+\begin{lemma}[Toda bola abierta es un conjunto convexo]
+\end{lemma}
+ \begin{proof}
+   Sea $x,y\in B_\epsilon (a)$ y $t\in[0,1]$, entonces
+   \begin{align*}
+     \norm{[tx+(1-t)y]-a}=\norm{[tx+(1-t)y]-a+ta-ta}\\
+     =\norm{t(x-a)+(1-t)(y-a)}\leq t\norm{x-a}+(1-t)\norm{y-a}<\epsilon
+   \end{align*}
+   y entonces $tx+(1-t)y\in B_\epsilon(a)$ 
+ \end{proof}
+\begin{definition}[Función convexa generlizada]
+  Sea $C\subseteq V$ convexo, llamamos a $f: C\to \R$ convexa si para todo $x,y\in C$ y $t\in [0,1]$ \[
+    f(tx+(1-t)y)\leq tf(x)+ (1-t)f(y)
+  \] 
+\end{definition}
+Observa que toda norma es una función convexa, por la desigualdad triangular.
+\section{Suceesiones}
+\begin{definition}
+  Denotamos con $(x^n)$ a la sucesión de terminos donde $x^k\in V$ para $k\in \N$ 
+\end{definition}
+Vease que usamos la notación $x^k$ para el $k$-ésimo elemento de la sucesión, mientras que $x_k$ denota la entrada.
+\begin{definition}[Convergencia]
+  La sucesión $(x_n)$ converge a $L\in V$ si \[
+    \lim_{n\to\infty}\norm{x-L}=0
+  \], donde este es un límite en $\R$.
+\end{definition}
+Véase a que esto equivale que para todo $\epsilon>0$ existe $n_0\in \N$ tal que si $k\geq n_0$, entonces $x_k\in B_\epsilon (L)$
+\begin{lemma}[Propiedades de las suceesiones]
+Si $(x_n)\leadsto x$ e $(y_n)\leadsto y$, entonces 
+\begin{itemize}
+  \item $(\norm{x_k})\leadsto \norm{x}$ 
+  \item para una sucesión real $(\lambda^k)\leadsto \lambda$, $(\lambda^k x^k+y^k)\leadsto \lambda x+y$
+  \item $(\ip{x^k, y^k})\leadsto \ip{x,y}$ 
+\end{itemize}
+\end{lemma}
+\begin{proof}
+    Demostramos la última propiedad, para esta asumimos que la norma está inducida por el producto interno 
+    \begin{align*}
+      0\leq|\ip{x^k,y^k}-\ip{x,y}|=\\
+      |\ip{x^k,y^k}-\ip{x^k,y}+\ip{x^k,y}-\ip{x,y}|\leq\\
+      |\ip{x^k,y^k-y}|+|\ip{x^k-x,y}|\leq\\
+      \norm{x^k}\norm{y^k-y}+\norm{y}\norm{x^k-x},
+    \end{align*}
+    ahora tomando límites y usando el toerema del Sandwich concluimos que $\lim_{k\to\infty} |\ip{x^k,y^k}-\ip{x,y}|=0$ 
+\end{proof}
+\begin{lemma}
+  En $\R^n$ una sucesion converge, $(x^n)\leadsto x$, si y solo si sus componentes convergen, $(x^k_j)\leadsto x_j$ para $1\leq j\leq n$.
+\end{lemma}
+\begin{proof}
+  Por el \fullref{thm:equivalencia_de_normas_en_Rn} existen $C_1,C_2>0$ tal que $C_1\norm{x^k-x}_\infty\le \norm{x^k-x}\le C_2\norm{x^k-x}_\infty$, entonces para $i\in \{1,\ldots,n\} $ \[
+  C_1|x_i^k-x_i| \le C_1\max_{1\leq j\leq n}\{|x_j^k-x_j|\} \le \norm{x^k-x}\le C_2\max_{1\leq j\leq n}\{|x_j^k-x_j|\}.
+  \]
+  Asume que $(x^k)\leadsto x$; sea $\epsilon>0$, existe $n_0\in \N$ tal que si $k \ge n_0$, $\norm{x^k-x} \le C_1\epsilon$ y por la cadena de desigualdades anterior esto implica que $(x_i^k)\leadsto x_i$.\\
+  Asume que para todo $i\in \{1,\ldots,n\}$, $(x_i^k)\leadsto x_i$; sea $\epsilon >0$, existen $n_0^i \in \N$ tal que $|x_i^k-x_i|<\frac{\epsilon }{C_2}$ para $1 \leq i \leq n$; para $k \geq n_0$, donde $n_0=\max_{i} \{n_0^i\}$, tenemos que $\max_{j} \{|x_j^k-x_j\} \leq \frac{\epsilon }{C_2}$ y por la cadena de desigualdades anterior esto implica que $(x^k)\leadsto x$ 
+\end{proof}

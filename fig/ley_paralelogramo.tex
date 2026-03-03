@@ -1,0 +1,35 @@
+% Requires: \usepackage{tikz}
+% Optional but nice: \usetikzlibrary{arrows.meta,calc}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=1.05, line cap=round, line join=round, >=Latex]
+  % Vectors
+  \coordinate (O) at (0,0);
+  \coordinate (x) at (3,1);
+  \coordinate (y) at (1.2,2.6);
+  \coordinate (xpy) at ($(x)+(y)$);
+
+  % Axes (optional)
+  \draw[->, gray!60] (-0.4,0) -- (4.8,0) node[below] {$e_1$};
+  \draw[->, gray!60] (0,-0.4) -- (0,4.6) node[left] {$e_2$};
+
+  % Parallelogram edges
+  \draw[thick] (O) -- (x) -- (xpy) -- (y) -- cycle;
+
+  % Vectors x and y
+  \draw[very thick, ->] (O) -- (x) node[midway, below right] {$x$};
+  \draw[very thick, ->] (O) -- (y) node[midway, left] {$y$};
+
+  % Diagonals: x+y and x-y
+  \draw[very thick, ->, blue] (O) -- (xpy) node[midway, above right] {$x+y$};
+  \draw[very thick, ->, red]  (y) -- (x) node[midway, above left] {$x-y$};
+
+  % Point labels
+  \fill (O) circle (1.2pt) node[below left] {$0$};
+  \fill (x) circle (1.2pt);
+  \fill (y) circle (1.2pt);
+  \fill (xpy) circle (1.2pt);
+
+\end{tikzpicture}
+\end{figure}
