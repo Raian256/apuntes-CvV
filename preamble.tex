@@ -1,17 +1,19 @@
 \documentclass[12pt,oneside]{scrreprt} % KOMA: mejor tipografía, buen control de capítulos
 
 % --- Idioma y tipografía ---
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}  % Usa LuaLaTeX/XeLaTeX y quita esto si prefieres fuentes modernas
-\usepackage{lmodern}
+\usepackage{fontspec}        % fuentes del sistema (LuaLaTeX)
+\usepackage{mathtools}       % antes de unicode-math (requerido)
+\usepackage{amsthm}          % antes de unicode-math para que thmtools detecte el backend
+\usepackage{unicode-math}    % fuentes matemáticas unicode; provee \symbf; reemplaza amssymb
 \usepackage{microtype}       % mejor espaciado
-\usepackage{csquotes}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{csquotes}        % cargar después de babel
 
 % --- Página ---
 \usepackage[a4paper,margin=2.6cm]{geometry}
 
 % --- Matemáticas ---
-\usepackage{mathtools,amssymb,amsthm}
+% mathtools cargado arriba (antes de unicode-math); amssymb reemplazado por unicode-math
 \usepackage{thmtools}        % estilos/refinamientos para teoremas
 \numberwithin{equation}{section}
 \let\epsilon\varepsilon
@@ -23,7 +25,7 @@
   spaceabove=6pt, spacebelow=6pt, headpunct=.
 ]{thmstyle}
 \declaretheorem[style=thmstyle,numberwithin=section,name=Teorema]{theorem}
-\declaretheorem[style=remark,numberwithin=section,name=Informal]{informal}
+\declaretheorem[style=remark,sibling=theorem,name=Informal]{informal}
 \declaretheorem[style=thmstyle,sibling=theorem,name=Lema]{lemma}
 \declaretheorem[style=thmstyle,sibling=theorem,name=Proposición]{proposition}
 \declaretheorem[style=definition,sibling=theorem,name=Definición]{definition}
@@ -31,11 +33,47 @@
 \declaretheorem[style=remark,sibling=theorem,numbered=no,name=Ejercicio]{exercise}
 \declaretheorem[style=remark,sibling=theorem,numbered=no,name=Insight]{insight}
 
-\newenvironment{solution}{\begin{proof}[Solution]\let\qed\relax}{\end{proof}}
+\newenvironment{solution}{\begin{proof}[Solución]\let\qed\relax}{\end{proof}}
 
+% --- Cajas de teoremas ---
+\usepackage[skins,breakable]{tcolorbox}
+
+\tcbset{
+  thmbase/.style={
+    enhanced,
+    breakable,
+    sharp corners,
+    frame hidden,
+    left=6pt, right=4pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=8pt,
+  }
+}
+
+% Azul — resultados (teoremas, lemas, proposiciones)
+\tcolorboxenvironment{theorem}{thmbase,
+  borderline west={3pt}{0pt}{blue!70!black}, colback=blue!5!white}
+\tcolorboxenvironment{lemma}{thmbase,
+  borderline west={3pt}{0pt}{blue!70!black}, colback=blue!5!white}
+\tcolorboxenvironment{proposition}{thmbase,
+  borderline west={3pt}{0pt}{blue!70!black}, colback=blue!5!white}
+
+% Verde azulado — definiciones
+\tcolorboxenvironment{definition}{thmbase,
+  borderline west={3pt}{0pt}{teal!80!black}, colback=teal!5!white}
+
+% Naranja — ejemplos
+\tcolorboxenvironment{example}{thmbase,
+  borderline west={3pt}{0pt}{orange!80!black}, colback=orange!4!white}
+
+% Gris — informal, insight
+\tcolorboxenvironment{informal}{thmbase,
+  borderline west={3pt}{0pt}{gray!55!black}, colback=gray!5!white}
+\tcolorboxenvironment{insight}{thmbase,
+  borderline west={3pt}{0pt}{gray!55!black}, colback=gray!5!white}
 
 % --- Referencias y PDF ---
 \usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black}
 \usepackage[capitalise,noabbrev,nameinlink]{cleveref}
 % Spanish names for theorem-like environments:
 \crefname{theorem}{Teorema}{Teoremas}
@@ -43,7 +81,6 @@
 \crefname{proposition}{Proposición}{Proposiciones}
 \crefname{corollary}{Corolario}{Corolarios}
 \crefname{definition}{Definición}{Definiciones}
-\crefname{remark}{Observación}{Observaciones}
 \crefname{example}{Ejemplo}{Ejemplos}
 % spanish Prueba instead of proof 
 \renewcommand{\proofname}{Prueba}
@@ -53,6 +90,7 @@
 \newcommand{\step}[1]{%
   \refstepcounter{proofstep}\label{#1}\textbf{(\theproofstep) }\ignorespaces}
 
+\AtBeginEnvironment{proof}{\setcounter{proofstep}{0}}
 \AtBeginEnvironment{solution}{\setcounter{proofstep}{0}}
 
 % Make \cref{<proofstep-label>} print "(n)"
@@ -61,7 +99,7 @@
 % Let TeX fix small overruns instead of whining
 \emergencystretch=2em   % extra stretch on the last pass (very effective)
 \hfuzz=2pt              % ignore overfull < 2pt (tune to 3pt if you like)
-\hbadness=10000         % silence underfull warnings
+\hbadness=3000          % reduce underfull warnings sin silenciarlos todos
 
 % to use enum with letters 
 \usepackage{enumitem}

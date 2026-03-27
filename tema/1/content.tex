@@ -3,7 +3,7 @@ Durante este capítulo se asume que $V$ es un espacio vectorial sobre $\R$ .
 \section{Normas}
 Se abstrae la noción de distancia a través la norma.
 \begin{definition}\label{def:norma}
-  Llamamos norma en $V$ a una función $\norm{\cdot} : V\to \R$ si cumple que para todo $v,w\in V$ y $\lambda \in R$
+  Llamamos norma en $V$ a una función $\norm{\cdot} : V\to \R$ si cumple que para todo $v,w\in V$ y $\lambda \in \R$
   \begin{enumerate}
     \item $\norm{x}\ge 0$ y $\norm{x}=0$ si y solo si $x=0$. 
     \item $| \lambda|\norm{v}=\norm{\lambda v}$  (\textit{homogeneidad}).
@@ -134,9 +134,9 @@ Habiendo generalizado la noción de distancia, generalizamos la de intervalo.
   \]
 \end{definition}
 \begin{example}
-  Sea $V=\R^2$, ilustramos las bolas abiertas con centro 0 y radio 1 para las normas $L_p$, $p=1,2,3,4,\infty$ en la figura \ref{fig:tema_1_bolas_lp}
-  \input{./fig/tema_1_bolas_lp.tex}
+  Sea $V=\R^2$, ilustramos las bolas abiertas con centro 0 y radio 1 para las normas $L_p$, $p=1,2,3,4,\infty$ en la \cref{fig:tema_1_bolas_lp}.
 \end{example}
+\input{./fig/tema_1_bolas_lp.tex}
 Generalizamos ahora la noción de segmento entre dos puntos.
 \begin{definition}[Segmento]
   Dados dos puntos $x,y\in V$ llamamos segmento a \[
@@ -174,11 +174,11 @@ Vease que usamos la notación $x^k$ para el $k$-ésimo elemento de la sucesión,
 \end{definition}
 Véase a que esto equivale que para todo $\epsilon>0$ existe $n_0\in \N$ tal que si $k\geq n_0$, entonces $x_k\in B_\epsilon (L)$
 \begin{lemma}[Propiedades de las suceesiones]
-Si $(x_n)\leadsto x$ e $(y_n)\leadsto y$, entonces 
+Si $(x_n)\to x$ e $(y_n)\to y$, entonces 
 \begin{itemize}
-  \item $(\norm{x_k})\leadsto \norm{x}$ 
-  \item para una sucesión real $(\lambda^k)\leadsto \lambda$, $(\lambda^k x^k+y^k)\leadsto \lambda x+y$
-  \item $(\ip{x^k, y^k})\leadsto \ip{x,y}$ 
+  \item $(\norm{x_k})\to \norm{x}$ 
+  \item para una sucesión real $(\lambda^k)\to \lambda$, $(\lambda^k x^k+y^k)\to \lambda x+y$
+  \item $(\ip{x^k, y^k})\to \ip{x,y}$ 
 \end{itemize}
 \end{lemma}
 \begin{proof}
@@ -192,12 +192,12 @@ Si $(x_n)\leadsto x$ e $(y_n)\leadsto y$, entonces
     ahora tomando límites y usando el toerema del Sandwich concluimos que $\lim_{k\to\infty} |\ip{x^k,y^k}-\ip{x,y}|=0$ 
 \end{proof}
 \begin{lemma}
-  En $\R^n$ una sucesion converge, $(x^n)\leadsto x$, si y solo si sus componentes convergen, $(x^k_j)\leadsto x_j$ para $1\leq j\leq n$.
+  En $\R^n$ una sucesion converge, $(x^n)\to x$, si y solo si sus componentes convergen, $(x^k_j)\to x_j$ para $1\leq j\leq n$.
 \end{lemma}
 \begin{proof}
   Por el \fullref{thm:equivalencia_de_normas_en_Rn} existen $C_1,C_2>0$ tal que $C_1\norm{x^k-x}_\infty\le \norm{x^k-x}\le C_2\norm{x^k-x}_\infty$, entonces para $i\in \{1,\ldots,n\} $ \[
   C_1|x_i^k-x_i| \le C_1\max_{1\leq j\leq n}\{|x_j^k-x_j|\} \le \norm{x^k-x}\le C_2\max_{1\leq j\leq n}\{|x_j^k-x_j|\}.
   \]
-  Asume que $(x^k)\leadsto x$; sea $\epsilon>0$, existe $n_0\in \N$ tal que si $k \ge n_0$, $\norm{x^k-x} \le C_1\epsilon$ y por la cadena de desigualdades anterior esto implica que $(x_i^k)\leadsto x_i$.\\
-  Asume que para todo $i\in \{1,\ldots,n\}$, $(x_i^k)\leadsto x_i$; sea $\epsilon >0$, existen $n_0^i \in \N$ tal que $|x_i^k-x_i|<\frac{\epsilon }{C_2}$ para $1 \leq i \leq n$; para $k \geq n_0$, donde $n_0=\max_{i} \{n_0^i\}$, tenemos que $\max_{j} \{|x_j^k-x_j\} \leq \frac{\epsilon }{C_2}$ y por la cadena de desigualdades anterior esto implica que $(x^k)\leadsto x$ 
+  Asume que $(x^k)\to x$; sea $\epsilon>0$, existe $n_0\in \N$ tal que si $k \ge n_0$, $\norm{x^k-x} \le C_1\epsilon$ y por la cadena de desigualdades anterior esto implica que $(x_i^k)\to x_i$.\\
+  Asume que para todo $i\in \{1,\ldots,n\}$, $(x_i^k)\to x_i$; sea $\epsilon >0$, existen $n_0^i \in \N$ tal que $|x_i^k-x_i|<\frac{\epsilon }{C_2}$ para $1 \leq i \leq n$; para $k \geq n_0$, donde $n_0=\max_{i} \{n_0^i\}$, tenemos que $\max_{j} \{|x_j^k-x_j\} \leq \frac{\epsilon }{C_2}$ y por la cadena de desigualdades anterior esto implica que $(x^k)\to x$ 
 \end{proof}
