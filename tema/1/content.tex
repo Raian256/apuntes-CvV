@@ -5,7 +5,7 @@ Se abstrae la noción de distancia a través la norma.
 \begin{definition}\label{def:norma}
   Llamamos norma en $V$ a una función $\norm{\cdot} : V\to \R$ si cumple que para todo $v,w\in V$ y $\lambda \in \R$
   \begin{enumerate}
-    \item $\norm{x}\ge 0$ y $\norm{x}=0$ si y solo si $x=0$. 
+    \item $\norm{x}\ge 0$ y $\norm{x}=0$ si y solo si $x=0$. (\textit{definida positiva})
     \item $| \lambda|\norm{v}=\norm{\lambda v}$  (\textit{homogeneidad}).
     \item $\norm{v+w}\le \norm{v}+\norm{w}$ (\textit{desigualdad triangular}).
   \end{enumerate}
@@ -79,7 +79,27 @@ Atentos a la magia negra.
   \] 
 \end{lemma}
 \begin{proof}
-    TODO
+  Si $p=1$, sumando $|x_k+y_k|\le |x_k|+|y_k|$ obtenemos $\norm{x+y}_1\le \norm{x}_1+\norm{y}_1$.\\
+  Sea $p>1$ y $q=\frac{p}{p-1}$, de modo que $\frac{1}{p}+\frac{1}{q}=1$. Denotamos $a_k=|x_k|$ y $b_k=|y_k|$; como $|x_k+y_k|\le a_k+b_k$ se tiene $\norm{x+y}_p\le \parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/p}$ y $\norm{a}_p=\norm{x}_p$, $\norm{b}_p=\norm{y}_p$, luego basta demostrar que \[
+    \parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/p}\le \norm{a}_p+\norm{b}_p.
+  \]
+  Escribimos
+  \[
+    \sum_{k=1}^n (a_k+b_k)^p = \sum_{k=1}^n a_k(a_k+b_k)^{p-1}+\sum_{k=1}^n b_k(a_k+b_k)^{p-1}
+  \]
+  y aplicamos Hölder a cada suma con exponentes $p$ y $q$. Como $(p-1)q=(p-1)\cdot\frac{p}{p-1}=p$,
+  \begin{align*}
+    \sum_{k=1}^n a_k(a_k+b_k)^{p-1}&\le \norm{a}_p\parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/q},\\
+    \sum_{k=1}^n b_k(a_k+b_k)^{p-1}&\le \norm{b}_p\parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/q};
+  \end{align*}
+  sumando,
+  \[
+    \sum_{k=1}^n(a_k+b_k)^p\le \parens*{\norm{a}_p+\norm{b}_p}\parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/q}.
+  \]
+  Si $\sum_{k=1}^n(a_k+b_k)^p=0$ la desigualdad es trivialmente $0\le 0$. En caso contrario dividimos ambos lados por $\parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/q}$; como $1-\frac{1}{q}=\frac{1}{p}$ obtenemos
+  \[
+    \parens*{\sum_{k=1}^n(a_k+b_k)^p}^{1/p}\le \norm{a}_p+\norm{b}_p.
+  \]
 \end{proof}
 \begin{theorem}[Las normas $L_p$ son normas]
 \end{theorem}
@@ -92,11 +112,11 @@ Atentos a la magia negra.
   En $\R^n$ todas las normas son equivalentes
 \end{theorem}
 \begin{proof}
-    TODO
+  De momento esto te lo vas a tener que creer.
 \end{proof}
 \section{Producto interno}
 \begin{definition}[Producto interno]
-  Llmamamos producto interno en $V$ a una función $\ip{x,y}: V\times V\to \R$ que cumple \begin{enumerate}
+  Llmamamos producto interno en $V$ a una función bilineal  simétrica definida positiva $\ip{x,y}: V\times V\to \R$ \begin{enumerate}
     \item $\ip{x,x}\ge 0$ dandose la igualdad si y solo si $x=0$,
     \item para todo $y\in V$ la función $x\mapsto \ip{x,y}$ es lineal,
     \item $\ip{x,y} = \ip{y,x}$.
@@ -105,14 +125,33 @@ Atentos a la magia negra.
 \begin{proposition}[Norma inducida por un producto interno]
   Dado un producto interno, la función $\norm{x}=\sqrt{\ip{x,x}} $ es una norma.
 \end{proposition}
-Para demostrar que cumple la desigualdad triangular usaremos el siguiente teorema.
-\begin{theorem}[Cauchy-Schwarz]
+Para demostrar que cumple la desigualdad triangular usaremos el \fullref{thm:cauchy-schwarz}, y para demostrar este el siguiente lema.
+\begin{lemma}\label{lemma:discriminante}
+  Sea $p(t)=at^2+bt+c$, con $a,b,c,t\in \R$, tal que $p(t)\geq 0$ para todo $t\in \R$, entonces el discriminante es no positivo \[
+      \Delta=b^2-4ac \leq 0
+  \] 
+\end{lemma}
+La idea es sencilla: como $a>0$, la parábola $p(t)$ abre hacia arriba. Si $p(t)\ge 0$ para todo $t$, entonces nunca cruza el eje horizontal, luego tiene a lo sumo una raíz (la del vértice) y por tanto $\Delta\le 0$.
+\input{fig/discriminante_parabola.tex}
+\begin{proof}
+  Como $p(t)\ge 0$ para todo $t$ y $\lim_{t\to \infty}p(t)=\operatorname{signo}(a)\cdot\infty$, necesariamente $a>0$. Evaluamos $p$ en el vértice $t_0=-\frac{b}{2a}$: \[
+    0\le p(t_0)=a\frac{b^2}{4a^2}-\frac{b^2}{2a}+c=\frac{4ac-b^2}{4a}=\frac{-\Delta}{4a}.
+  \]
+  Como $a>0$, multiplicando por $4a$ obtenemos $-\Delta\ge 0$.
+\end{proof}
+\begin{theorem}[Cauchy-Schwarz]\label{thm:cauchy-schwarz}
   Sea $x,y\in V$, si la norma es la inducida por el producto interno, entonces \[
     \abs{\ip{x,y}}\le \norm{x}\norm{y}
   \] 
 \end{theorem}
 \begin{proof}
-  A mí me gusta la demostración usando la descomposición en vectores ortogonales. La profesora ha dado otra.
+  Como la norma está inducida por el producto interno, para todo $t\in \R$ tenemos \[
+    0\le \norm{x+ty}^2=\ip{x+ty,x+ty}=\norm{y}^2t^2+2\ip{x,y}t+\norm{x}^2.
+  \]
+  Este es un polinomio de grado 2 en $t$ que es no negativo para todo $t$; por el \cref{lemma:discriminante} su discriminante es no positivo: \[
+    \Delta=4\ip{x,y}^2-4\norm{x}^2\norm{y}^2\le 0,
+  \]
+  dividiendo por $4$ obtenemos $\ip{x,y}^2\le \norm{x}^2\norm{y}^2$, y tomando raíces concluimos $\abs{\ip{x,y}}\le \norm{x}\norm{y}$.
 \end{proof}
 Verifica por ti mismo que ahora se puede demostrar que es una norma.
 \begin{proposition}[Ley del paralelogramo]
@@ -122,7 +161,7 @@ Verifica por ti mismo que ahora se puede demostrar que es una norma.
 \end{proposition}
 \begin{proof}
   Asume que la norma $\norm{\cdot}$ está inducida por un producto escalar, observa que $\norm{x\pm y}^2=\ip{x\pm y,x\pm y}=\norm{x}^2+\norm{y}^2\pm 2\ip{x,y}$ y entonces se verifica la ley del paralelogramo.\\
-  Se deja como tortura para el lector verificar que el enunciado converso es cierto.
+  Se deja como tortura para el lector verificar que el enunciado converso es cierto. Es dificil, no lo intentes.
 \end{proof}
 En $\R^2$ se ilustra de la siguiente forma y se puede demostrar usando geometría elemental que la ley se da en todo paralelogramo. 
 \input{fig/ley_paralelogramo.tex}
