@@ -195,10 +195,16 @@ Generalizamos ahora la noción de segmento entre dos puntos.
    \end{align*}
    y entonces $tx+(1-t)y\in B_\epsilon(a)$ 
  \end{proof}
-\begin{definition}[Función convexa generlizada]
+\begin{informal}
+  Ya definimos función convexa en $\R$ pidiendo $f''\geq 0$. Resulta que esto es equivalente a pedir que la cuerda entre dos puntos cualesquiera de la gráfica quede por encima de la curva: si tomamos $x,y$ en el dominio y caminamos por el segmento $tx+(1-t)y$, el valor $f(tx+(1-t)y)$ nunca supera la interpolación lineal $tf(x)+(1-t)f(y)$. Véase la \cref{fig:tema_1_funcion_convexa}.
+
+  Esta segunda formulación no necesita derivadas ni siquiera que el dominio sea un intervalo de $\R$: solo necesita que tenga sentido hablar de segmentos, es decir, que el dominio sea un conjunto convexo de un espacio vectorial. Esto nos da la definición \emph{generalizada} de convexidad.
+\end{informal}
+\input{./fig/tema_1_funcion_convexa.tex}
+\begin{definition}[Función convexa generalizada]
   Sea $C\subseteq V$ convexo, llamamos a $f: C\to \R$ convexa si para todo $x,y\in C$ y $t\in [0,1]$ \[
     f(tx+(1-t)y)\leq tf(x)+ (1-t)f(y)
-  \] 
+  \]
 \end{definition}
 Observa que toda norma es una función convexa, por la desigualdad triangular.
 \section{Suceesiones}
@@ -212,23 +218,43 @@ Vease que usamos la notación $x^k$ para el $k$-ésimo elemento de la sucesión,
   \], donde este es un límite en $\R$.
 \end{definition}
 Véase a que esto equivale que para todo $\epsilon>0$ existe $n_0\in \N$ tal que si $k\geq n_0$, entonces $x_k\in B_\epsilon (L)$
+\begin{definition}[Sucesión acotada]
+  Decimos que $(x^n)$ está acotada si existe $\epsilon >0$ tal que $\norm{x^n}<\epsilon$ para todo $n \in \N$ 
+\end{definition}
+Comprueba que toda sucessión convergente está acotada.
 \begin{lemma}[Propiedades de las suceesiones]
-Si $(x_n)\to x$ e $(y_n)\to y$, entonces 
+Si $(x^n)\to x$ e $(y^n)\to y$, entonces 
 \begin{itemize}
-  \item $(\norm{x_k})\to \norm{x}$ 
-  \item para una sucesión real $(\lambda^k)\to \lambda$, $(\lambda^k x^k+y^k)\to \lambda x+y$
-  \item $(\ip{x^k, y^k})\to \ip{x,y}$ 
+  \item $(\norm{x^n})\to \norm{x}$ 
+  \item para una sucesión real $(\lambda^n)\to \lambda$, $(\lambda^n x^n+y^n)\to \lambda x+y$
+  \item $(\ip{x^n, y^n})\to \ip{x,y}$ 
 \end{itemize}
 \end{lemma}
+Demostramos primero la segunda propiedad.
 \begin{proof}
-    Demostramos la última propiedad, para esta asumimos que la norma está inducida por el producto interno 
+    Sea $\epsilon >0$, vease que usando reiteradametne la desigualdad triangular tenemos que \[
+      \norm{\lambda^n x^n+y^n-\lambda x-y}\leq \norm{\lambda^n x^n -\lambda x}+\norm{y^n-y},
+    \] 
+    y 
+    \begin{align*}
+    \norm{\lambda^n x^n -\lambda x}
+    =\norm{\lambda^n x^n -\lambda x^n+\lambda x^n-\lambda x}\\
+    = \norm{(\lambda^n -\lambda)x^n+(x-x^n)\lambda}\leq \abs{\lambda^n -\lambda}\norm{x^n}+\abs{\lambda} \norm{x^n-x};
+    \end{align*}
+    como $(x^n)$ converge, está acotada y existe $M>0$ tal que $\norm{x^n}<M$; finalmente basta tomar $n \in \N$ lo suficientemente grande para que $\norm{y^n-y}<0.5\epsilon$, $\abs{\lambda^n-\lambda}<0.25 M^{-1}\epsilon$ y $\norm{x^n-x}<0.25 \abs{\lambda}^{-1} \epsilon $. Hemos asumido que $\abs{\lambda} \neq 0$ al acotar $\norm{x^n-x}$, pero si se diese la igualdad entonces no haría falta acotar.
+\end{proof}
+Ahora la última.
+\begin{proof}
+    Asume que la norma está inducida por el producto interno. Sea $\epsilon >0$ 
     \begin{align*}
       0\leq|\ip{x^k,y^k}-\ip{x,y}|=\\
       |\ip{x^k,y^k}-\ip{x^k,y}+\ip{x^k,y}-\ip{x,y}|\leq\\
       |\ip{x^k,y^k-y}|+|\ip{x^k-x,y}|\leq\\
       \norm{x^k}\norm{y^k-y}+\norm{y}\norm{x^k-x},
     \end{align*}
-    ahora tomando límites y usando el toerema del Sandwich concluimos que $\lim_{k\to\infty} |\ip{x^k,y^k}-\ip{x,y}|=0$ 
+    donde hemos usado \fullref{thm:cauchy-schwarz};
+    como $(x^n)$ converge, está acotada y existe $M>0$ tal que $\norm{x^n}<M$; finalmente basta tomar $n_0 \in \N$ lo suficientemnate grande como para que $\norm{y^n-y}<0.5 M^{-1}\epsilon $ y $\norm{x^n-x}<0.5\norm{y}^{-1} \epsilon $.
+Hemos asumido que $\norm{y} \neq 0$ al acotar $\norm{x^n-x}$, pero si se diese la igualdad entonces no haría falta acotar.
 \end{proof}
 \begin{lemma}
   En $\R^n$ una sucesion converge, $(x^n)\to x$, si y solo si sus componentes convergen, $(x^k_j)\to x_j$ para $1\leq j\leq n$.

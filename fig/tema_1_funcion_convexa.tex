@@ -1,0 +1,56 @@
+% fig/tema_1_funcion_convexa.tex
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=1.1]
+  % Axes
+  \draw[-{Stealth}] (-0.5,0) -- (5.5,0);
+  \draw[-{Stealth}] (0,-0.3) -- (0,4.5);
+
+  % Convex function: f(t) = 0.3*(t-2.5)^2 + 0.5
+  \draw[thick, blue!70!black, domain=0.3:5.2, samples=80]
+    plot (\x, {0.3*(\x-2.5)*(\x-2.5)+0.5});
+
+  % Points x, y on the curve
+  \coordinate (X) at (1, {0.3*(1-2.5)*(1-2.5)+0.5});   % (1, 1.175)
+  \coordinate (Y) at (4.5, {0.3*(4.5-2.5)*(4.5-2.5)+0.5}); % (4.5, 1.7)
+
+  % Chord
+  \draw[thick, red!70!black, dashed] (X) -- (Y);
+
+  % Parameter t ~ 0.6, so point = 0.6*1 + 0.4*4.5 = 2.4
+  \pgfmathsetmacro{\tval}{0.6}
+  \pgfmathsetmacro{\mx}{\tval*1 + (1-\tval)*4.5}        % 2.4
+  \pgfmathsetmacro{\fmx}{0.3*(\mx-2.5)*(\mx-2.5)+0.5}   % f(2.4) = 0.503
+  \pgfmathsetmacro{\chord}{\tval*1.175 + (1-\tval)*1.7}  % 1.385
+
+  % Vertical segment showing the inequality
+  \draw[thin, gray, densely dotted] (\mx, 0) -- (\mx, \chord);
+
+  % Point on curve: f(tx+(1-t)y)
+  \fill[blue!70!black] (\mx, \fmx) circle (1.8pt)
+    node[left=3pt, font=\small] {$f(tx{+}(1{-}t)y)$};
+
+  % Point on chord: tf(x)+(1-t)f(y)
+  \fill[red!70!black] (\mx, \chord) circle (1.8pt)
+    node[above right=1pt, font=\small] {$tf(x){+}(1{-}t)f(y)$};
+
+  % Mark x and y
+  \fill[black] (X) circle (1.8pt) node[above left, font=\small] {$f(x)$};
+  \fill[black] (Y) circle (1.8pt) node[above right, font=\small] {$f(y)$};
+
+  % x and y labels on the axis
+  \draw[thin, gray, densely dotted] (1, 0) -- (X);
+  \draw[thin, gray, densely dotted] (4.5, 0) -- (Y);
+  \node[below, font=\small] at (1, 0) {$x$};
+  \node[below, font=\small] at (4.5, 0) {$y$};
+  \node[below, font=\small] at (\mx, 0) {$tx{+}(1{-}t)y$};
+
+  % Brace or arrow showing ≤
+  \draw[{Stealth}-{Stealth}, thick, teal!80!black]
+    (\mx+0.08, \fmx) -- (\mx+0.08, \chord)
+    node[midway, right=2pt, font=\small, teal!80!black] {$\leq$};
+
+\end{tikzpicture}
+\caption{La gráfica de una función convexa queda por debajo de la cuerda entre dos puntos cualesquiera.}
+\label{fig:tema_1_funcion_convexa}
+\end{figure}
